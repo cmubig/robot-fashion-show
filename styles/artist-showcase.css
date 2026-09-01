@@ -1,0 +1,586 @@
+/* Artist Showcase - Fullscreen sections for each artist */
+
+/* Main showcase container */
+.artists-showcase {
+    position: relative;
+    background: var(--dark-bg);
+}
+
+/* Intro section */
+.artists-intro {
+    min-height: 100vh;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: linear-gradient(135deg, #1a1a1a 0%, #2a2a2a 100%);
+    text-align: center;
+    padding: 2rem;
+    position: relative;
+    overflow: hidden;
+}
+
+.artists-intro::before {
+    content: "";
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: radial-gradient(
+            circle at 20% 50%,
+            rgba(120, 119, 198, 0.3) 0%,
+            transparent 50%
+        ),
+        radial-gradient(
+            circle at 80% 20%,
+            rgba(255, 119, 198, 0.3) 0%,
+            transparent 50%
+        ),
+        radial-gradient(
+            circle at 40% 80%,
+            rgba(119, 198, 255, 0.3) 0%,
+            transparent 50%
+        );
+    animation: gradientShift 8s ease-in-out infinite;
+}
+
+@keyframes gradientShift {
+    0%,
+    100% {
+        opacity: 0.3;
+    }
+    50% {
+        opacity: 0.6;
+    }
+}
+
+.artists-intro-content {
+    position: relative;
+    z-index: 1;
+}
+
+.artists-intro h2 {
+    font-size: 4rem;
+    font-weight: 700;
+    margin-bottom: 1rem;
+    background: linear-gradient(45deg, #ffffff, #e0e0e0);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+    text-shadow: 0 0 30px rgba(255, 255, 255, 0.3);
+}
+
+.artists-intro p {
+    font-size: 1.5rem;
+    color: #cccccc;
+    margin-bottom: 2rem;
+}
+
+/* 인트로 애니메이션 - 최적화 */
+.artists-intro.animate-intro h2 {
+    animation: fashionSpotlight 3s ease-in-out infinite;
+}
+
+@keyframes fashionSpotlight {
+    0%,
+    100% {
+        text-shadow: 0 0 30px rgba(255, 255, 255, 0.3);
+    }
+    50% {
+        text-shadow: 0 0 50px rgba(255, 255, 255, 0.6);
+    }
+}
+
+/* Artist Showcase */
+.artist-showcase {
+    min-height: 100vh;
+    position: relative;
+    display: flex;
+    align-items: center;
+    scroll-snap-align: start;
+    overflow: hidden;
+    /* Optimize scroll performance */
+    contain: layout style paint;
+    will-change: transform;
+    transform: translate3d(0, 0, 0);
+}
+
+.showcase-background {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    z-index: 1;
+    /* Optimize for better scroll performance */
+    will-change: transform;
+    transform: translate3d(0, 0, 0);
+}
+
+.background-work {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    /* Reduce heavy blur effect for better performance */
+    filter: blur(4px) brightness(0.4);
+    /* GPU acceleration */
+    transform: translate3d(0, 0, 0);
+    backface-visibility: hidden;
+}
+
+.background-overlay {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(
+        135deg,
+        rgba(0, 0, 0, 0.7) 0%,
+        rgba(0, 0, 0, 0.5) 50%,
+        rgba(0, 0, 0, 0.8) 100%
+    );
+    z-index: 2;
+    /* Optimize overlay rendering */
+    will-change: opacity;
+    transform: translate3d(0, 0, 0);
+}
+
+.showcase-content {
+    position: relative;
+    z-index: 2;
+    width: 100%;
+    max-width: 1400px;
+    margin: 0 auto;
+    padding: 2rem;
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 4rem;
+    align-items: center;
+}
+
+/* 초간단 애니메이션 - 성능 최우선 */
+.artist-showcase:not(.in-view) .artist-profile {
+    opacity: 0;
+    transform: translateX(-50px);
+}
+
+.artist-showcase:not(.in-view) .artist-details {
+    opacity: 0;
+    transform: translateX(50px);
+}
+
+/* Artist Profile */
+.artist-profile {
+    display: flex;
+    flex-direction: column;
+    gap: 2rem;
+    background: rgba(255, 255, 255, 0.08);
+    padding: 2rem;
+    border-radius: 20px;
+    border: 1px solid rgba(255, 255, 255, 0.15);
+    box-shadow: 0 10px 20px rgba(0, 0, 0, 0.3);
+    transition: opacity 0.4s ease, transform 0.4s ease;
+}
+
+.profile-image {
+    width: 200px;
+    height: 200px;
+    border-radius: 50%;
+    object-fit: cover;
+    border: 4px solid rgba(255, 255, 255, 0.2);
+    filter: grayscale(20%);
+    align-self: center;
+}
+
+.profile-info h3 {
+    font-size: 2.5rem;
+    font-weight: 700;
+    margin-bottom: 1rem;
+    color: #ffffff;
+    text-align: center;
+}
+
+.artist-country {
+    color: #888;
+    font-size: 0.8em;
+    margin-left: 0.5rem;
+}
+
+.artist-career {
+    font-size: 1.2rem;
+    color: #ffffff;
+    margin-bottom: 1rem;
+    font-weight: 500;
+    text-align: center;
+}
+
+/* 여러 수상 이력을 위한 스타일 */
+.artist-achievements {
+    margin-bottom: 1.5rem;
+}
+
+.artist-achievement {
+    font-size: 1rem;
+    color: #ffffff;
+    margin-bottom: 0.5rem;
+    padding: 0.3rem 0;
+    border-left: 3px solid #ffffff;
+    padding-left: 1rem;
+}
+
+.artist-achievement:last-child {
+    margin-bottom: 0;
+}
+
+/* Artist Details */
+.artist-details {
+    display: flex;
+    flex-direction: column;
+    gap: 2rem;
+    background: rgba(255, 255, 255, 0.08);
+    padding: 2rem;
+    border-radius: 20px;
+    border: 1px solid rgba(255, 255, 255, 0.15);
+    box-shadow: 0 10px 20px rgba(0, 0, 0, 0.3);
+    transition: opacity 0.4s ease, transform 0.4s ease;
+}
+
+/* 작품 이미지 슬라이더 */
+.work-showcase {
+    position: relative;
+    border-radius: 12px;
+    overflow: hidden;
+    background: rgba(255, 255, 255, 0.1);
+    border: 1px solid rgba(255, 255, 255, 0.15);
+    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.4);
+}
+
+.work-images-container {
+    position: relative;
+    width: 100%;
+    height: 300px;
+    overflow: hidden;
+}
+
+.work-images-slider {
+    display: flex;
+    width: 100%;
+    height: 100%;
+    transition: transform 0.3s ease;
+}
+
+.work-image {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    flex-shrink: 0;
+    filter: brightness(0.9);
+}
+
+/* 이미지 네비게이션 버튼 */
+.image-nav-btn {
+    position: absolute;
+    top: 50%;
+    transform: translateY(-50%);
+    background: rgba(0, 0, 0, 0.6);
+    color: white;
+    border: none;
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: opacity 0.3s ease;
+    z-index: 3;
+    opacity: 0;
+    visibility: hidden;
+}
+
+.work-showcase:hover .image-nav-btn {
+    opacity: 1;
+    visibility: visible;
+}
+
+.image-nav-btn:hover {
+    background: rgba(0, 0, 0, 0.8);
+}
+
+.image-nav-btn.prev {
+    left: 10px;
+}
+
+.image-nav-btn.next {
+    right: 10px;
+}
+
+/* 이미지 인디케이터 */
+.image-indicators {
+    position: absolute;
+    bottom: 15px;
+    left: 50%;
+    transform: translateX(-50%);
+    display: flex;
+    gap: 8px;
+    z-index: 3;
+}
+
+.image-indicator {
+    width: 8px;
+    height: 8px;
+    border-radius: 50%;
+    background: rgba(255, 255, 255, 0.4);
+    cursor: pointer;
+    transition: background 0.3s ease;
+}
+
+.image-indicator.active {
+    background: #ffffff;
+}
+
+.work-title {
+    padding: 1rem;
+    font-size: 1.1rem;
+    color: #ffffff;
+    font-weight: 500;
+    text-align: center;
+    background: rgba(0, 0, 0, 0.3);
+    margin: 0;
+}
+
+.artist-description {
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+    background: rgba(255, 255, 255, 0.05);
+    padding: 1.5rem;
+    border-radius: 15px;
+    border: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+.artist-education,
+.artist-specialty {
+    font-size: 1rem;
+    color: #cccccc;
+    line-height: 1.6;
+}
+
+.artist-education {
+    font-weight: 500;
+    color: #e0e0e0;
+}
+
+.artist-links {
+    display: flex;
+    gap: 1rem;
+    margin-top: 1rem;
+    justify-content: left;
+}
+
+.profile-icon-btn,
+.instagram-icon-btn,
+.youtube-icon-btn,
+.interview-icon-btn {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 44px;
+    height: 44px;
+    border-radius: 50%;
+    background: rgba(255, 255, 255, 0.1);
+    color: #ffffff;
+    text-decoration: none;
+    transition: background 0.3s ease;
+    border: 1px solid rgba(255, 255, 255, 0.2);
+}
+
+.profile-icon-btn:hover,
+.instagram-icon-btn:hover,
+.youtube-icon-btn:hover,
+.interview-icon-btn:hover {
+    background: rgba(255, 255, 255, 0.2);
+}
+
+.youtube-icon-btn:hover {
+    background: rgba(255, 0, 0, 0.2);
+    color: #ff0000;
+}
+
+.instagram-icon-btn:hover {
+    background: linear-gradient(
+        45deg,
+        #f09433 0%,
+        #e6683c 25%,
+        #dc2743 50%,
+        #cc2366 75%,
+        #bc1888 100%
+    );
+    color: white;
+}
+
+/* Interview Icon Button - Different style to distinguish from regular YouTube */
+.interview-icon-btn {
+    background: rgba(135, 179, 117, 0.2);
+    border: 1px solid rgba(135, 179, 117, 0.4);
+    color: #87b375;
+    position: relative;
+}
+
+.interview-icon-btn:hover {
+    background: rgba(135, 179, 117, 0.3);
+    border-color: rgba(135, 179, 117, 0.6);
+    color: #ffffff;
+    transform: translateY(-2px);
+    box-shadow: 0 4px 12px rgba(135, 179, 117, 0.3);
+}
+
+/* Add a small "Interview" label to distinguish from regular YouTube */
+.interview-icon-btn::after {
+    content: "Interview";
+    position: absolute;
+    bottom: -20px;
+    left: 50%;
+    transform: translateX(-50%);
+    font-size: 8px;
+    color: #87b375;
+    white-space: nowrap;
+    opacity: 0;
+    transition: opacity 0.3s ease;
+}
+
+.interview-icon-btn:hover::after {
+    opacity: 1;
+}
+
+/* Full Interview label */
+.interview-icon-btn[title="Full Interview"]::after {
+    content: "Full Interview";
+}
+
+/* 2-Min Highlights label */
+.interview-icon-btn[title="2-Min Highlights"]::after {
+    content: "2-Min Highlights";
+}
+
+/* 초간단 애니메이션 - 최대 성능 */
+.artist-showcase.in-view .artist-profile {
+    opacity: 1;
+    transform: translateX(0);
+}
+
+.artist-showcase.in-view .artist-details {
+    opacity: 1;
+    transform: translateX(0);
+}
+
+/* 반응형 디자인 */
+@media (max-width: 1024px) {
+    .showcase-content {
+        grid-template-columns: 1fr;
+        gap: 3rem;
+        text-align: center;
+    }
+
+    .profile-image {
+        width: 150px;
+        height: 150px;
+    }
+
+    .profile-info h3 {
+        font-size: 2rem;
+    }
+
+    .work-images-container {
+        height: 250px;
+    }
+
+    /* 모바일에서는 세로 방향으로 */
+    .artist-showcase:not(.in-view) .artist-profile {
+        transform: translateY(-30px);
+    }
+
+    .artist-showcase:not(.in-view) .artist-details {
+        transform: translateY(30px);
+    }
+}
+
+@media (max-width: 768px) {
+    .artists-intro h2 {
+        font-size: 2.5rem;
+    }
+
+    .artists-intro p {
+        font-size: 1.2rem;
+    }
+
+    .showcase-content {
+        padding: 1rem;
+        gap: 2rem;
+    }
+
+    .artist-profile,
+    .artist-details {
+        padding: 1.5rem;
+    }
+
+    .profile-image {
+        width: 120px;
+        height: 120px;
+    }
+
+    .profile-info h3 {
+        font-size: 1.8rem;
+    }
+
+    .artist-career {
+        font-size: 1rem;
+    }
+
+    .artist-achievement {
+        font-size: 0.9rem;
+    }
+
+    .work-images-container {
+        height: 200px;
+    }
+
+    .work-title {
+        font-size: 1rem;
+        padding: 0.8rem;
+    }
+
+    .artist-education,
+    .artist-specialty {
+        font-size: 0.9rem;
+    }
+}
+
+@media (max-width: 480px) {
+    .artists-intro h2 {
+        font-size: 2rem;
+    }
+
+    .profile-info h3 {
+        font-size: 1.5rem;
+    }
+
+    .work-images-container {
+        height: 180px;
+    }
+
+    .artist-profile,
+    .artist-details {
+        padding: 1rem;
+    }
+
+    /* 모바일에서는 더욱 단순화 */
+    .artist-showcase:not(.in-view) .artist-profile {
+        transform: translateY(-20px);
+    }
+
+    .artist-showcase:not(.in-view) .artist-details {
+        transform: translateY(20px);
+    }
+}

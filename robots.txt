@@ -1,0 +1,13 @@
+User-agent: *
+Allow: /
+
+# Sitemap
+Sitemap: https://robotfashion.show//sitemap.xml
+
+# setting
+Crawl-delay: 1
+
+# etc 
+Disallow: /scripts/
+Disallow: /*.js$
+Disallow: /*.css$ 
